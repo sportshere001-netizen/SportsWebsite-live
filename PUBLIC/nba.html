@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsHere - NBA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+            min-height: 500px; display: flex; align-items: center; color: white; margin-top: 56px;
+        }
+
+        /* Card Styles */
+        .card { border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .live-game-card { border-top: 4px solid #ffc107; }
+        
+        /* Animation */
+        .highlight-pulse { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        }
+        .video-card { cursor: pointer; }
+        .video-card:hover .fa-play-circle { transform: scale(1.2); transition: 0.3s; color: #dc3545 !important; }
+        
+        /* Interactive Elements */
+        .poll-results { display: none; }
+        .ticker-wrap { background: #212529; color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        .ticker-item { display: inline-block; padding: 0 2rem; border-right: 1px solid #444; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="index.html"><i class="fas fa-running text-warning"></i> SportsHere</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="cricket.html">Cricket</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="football.html">Football</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold text-warning" href="nba.html">NBA</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="contact.html">Contact</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-warning text-dark fw-bold px-4 rounded-pill shadow-sm" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 animate__animated animate__fadeInLeft">
+                    <span class="badge bg-warning text-dark mb-3 px-3 py-2 fw-bold">NBA PLAYOFFS</span>
+                    <h1 class="display-3 fw-bold mb-3">Where Amazing Happens</h1>
+                    <p class="fs-4 mb-4 text-white-50">Follow the journey to the Larry O'Brien trophy. Live scores, stats, and highlights.</p>
+                    <div class="d-flex gap-3">
+                        <button onclick="scrollToSection('live-game-widget')" class="btn btn-warning btn-lg fw-bold rounded-pill px-5 shadow-lg text-dark">Game Center</button>
+                        <button onclick="scrollToSection('standings-table')" class="btn btn-outline-light btn-lg fw-bold rounded-pill px-5">Standings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="ticker-wrap border-bottom border-secondary">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <span class="badge bg-danger me-3 animate-pulse">LIVE NOW</span>
+                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span class="ticker-item"><strong class="text-warning">LAL vs GSW:</strong> 112 - 108 (4th Qtr)</span>
+                    <span class="ticker-item"><strong class="text-warning">BOS vs MIA:</strong> 98 - 95 (Final)</span>
+                    <span class="ticker-item"><strong class="text-warning">DEN vs PHX:</strong> 7:30 PM ET</span>
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-3"><i class="fas fa-chart-bar text-warning me-2"></i> Daily Leaders</h3>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <h6 class="text-muted text-uppercase fw-bold">Points</h6>
+                            <h2 class="display-4 fw-bold text-primary">42</h2>
+                            <p class="mb-0 fw-bold">Luka Doncic</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <h6 class="text-muted text-uppercase fw-bold">Rebounds</h6>
+                            <h2 class="display-4 fw-bold text-success">18</h2>
+                            <p class="mb-0 fw-bold">Nikola Jokic</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <h6 class="text-muted text-uppercase fw-bold">Assists</h6>
+                            <h2 class="display-4 fw-bold text-warning">14</h2>
+                            <p class="mb-0 fw-bold">Tyrese Haliburton</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h2 class="fw-bold border-start border-5 border-warning ps-3 mb-0">Court Side Stories</h2>
+                </div>
+
+                <div class="row" id="nba-scores-container"></div>
+                <div class="card mb-4 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=800&q=80" class="card-img-top" style="height: 350px; object-fit: cover;" alt="NBA Court">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fw-bold">Playoff Picture Intensifies</h3>
+                        <p class="card-text text-secondary">With only ten games remaining, the battle for the final seed in the West is heating up.</p>
+                        <button onclick="openNewsModal('Playoff Picture', 'The Western Conference is a bloodbath. Only 2 games separate the 5th and 10th seeds. Every game matters now...')" class="btn btn-outline-dark fw-bold mt-2">Read Full Breakdown</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card live-game-card mb-4" id="live-game-widget">
+                    <div class="card-header bg-warning text-dark fw-bold d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-circle text-danger me-2"></i> Live</span>
+                        <small>TNT</small>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="row align-items-center">
+                            <div class="col-4"><h3 class="fw-bold mb-0">LAL</h3></div>
+                            <div class="col-4"><h2 class="fw-bold mb-0">112</h2><span class="badge bg-dark">108</span></div>
+                            <div class="col-4"><h3 class="fw-bold mb-0">GSW</h3></div>
+                        </div>
+                        <div class="mt-3"><small class="text-danger fw-bold">4th QTR - 2:30</small></div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-4 border-0" id="standings-table">
+                    <div class="card-header bg-dark text-white fw-bold">Western Conference</div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 small">
+                            <thead><tr><th>#</th><th>Team</th><th>W-L</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td> <td>Nuggets</td> <td>53-24</td></tr>
+                                <tr><td>2</td> <td>Grizzlies</td> <td>50-27</td></tr>
+                                <tr><td>3</td> <td>Kings</td> <td>47-30</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card bg-dark text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="fw-bold"><i class="fas fa-poll me-2 text-warning"></i>MVP Poll</h5>
+                        <p class="small mb-3">Who is your MVP?</p>
+                        <div id="poll-options">
+                            <div class="form-check mb-2"><input class="form-check-input" type="radio" name="poll" id="poll1"><label class="form-check-label" for="poll1">Jokic</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="radio" name="poll" id="poll2"><label class="form-check-label" for="poll2">Giannis</label></div>
+                            <button onclick="submitPoll()" class="btn btn-primary btn-sm fw-bold w-100">Vote Now</button>
+                        </div>
+                        <div id="poll-results" class="poll-results mt-3">
+                            <h6 class="text-warning mb-3">Results:</h6>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Jokic</span><span>55%</span></div><div class="progress"><div class="progress-bar bg-success" style="width: 55%"></div></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Giannis</span><span>45%</span></div><div class="progress"><div class="progress-bar bg-primary" style="width: 45%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="bg-black py-5">
+        <div class="container">
+            <h3 class="text-white fw-bold mb-4 border-start border-4 border-warning ps-3">Game Highlights</h3>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('LeBron Dunk')">
+                        <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="Dunk">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">LeBron Poster Dunk</small></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('Curry 3 Pointer')">
+                        <img src="https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="3 Pointer">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">Curry from Downtown!</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-4 border-top border-secondary">
+        <p class="mb-0">&copy; 2025 SportsHere. All rights reserved.</p>
+    </footer>
+
+    <div class="modal fade" id="newsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fw-bold" id="newsModalTitle"></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p id="newsModalContent"></p></div></div></div>
+    </div>
+    <div class="modal fade" id="videoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content bg-black"><div class="modal-header border-secondary"><h5 class="modal-title text-white" id="videoModalTitle"></h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body text-center p-5"><i class="fas fa-play-circle fa-5x text-white mb-3"></i><p class="text-white-50">Video Player Simulation</p></div></div></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'center' }); element.classList.add('highlight-pulse'); setTimeout(() => { element.classList.remove('highlight-pulse'); }, 2000); }
+        }
+        function submitPoll() { document.getElementById('poll-options').style.display = 'none'; document.getElementById('poll-results').style.display = 'block'; }
+        function openNewsModal(title, content) { document.getElementById('newsModalTitle').innerText = title; document.getElementById('newsModalContent').innerText = content; new bootstrap.Modal(document.getElementById('newsModal')).show(); }
+        function openVideoModal(title) { document.getElementById('videoModalTitle').innerText = title; new bootstrap.Modal(document.getElementById('videoModal')).show(); }
+    </script>
+</body>
+</html>

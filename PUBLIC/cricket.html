@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsHere - Cricket World</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; }
+        
+        .hero-section {
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)), url('https://tse4.mm.bing.net/th/id/OIP.7_vVi-ZyUm7O_kkmoYAG7wHaE0?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3');
+            background-size: cover; background-position: center;
+            min-height: 500px;
+            display: flex; align-items: center; color: white; margin-top: 56px;
+        }
+
+        .card { border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .news-img-lg { height: 350px; object-fit: cover; width: 100%; }
+        .news-img-sm { height: 200px; object-fit: cover; width: 100%; }
+        .live-score-card { border-top: 4px solid #dc3545; }
+        
+        /* Interactive Animations */
+        .highlight-pulse { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+        .video-card { cursor: pointer; }
+        .video-card:hover .fa-play-circle { transform: scale(1.2); transition: 0.3s; color: #ffc107 !important; }
+        .poll-results { display: none; }
+        .ticker-wrap { background: #212529; color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        .ticker-item { display: inline-block; padding: 0 2rem; border-right: 1px solid #444; }
+        .progress { height: 10px; border-radius: 5px; background-color: #e9ecef; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="index.html"><i class="fas fa-running text-warning"></i> SportsHere</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold text-warning" href="cricket.html">Cricket</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="football.html">Football</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="nba.html">NBA</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="contact.html">Contact</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-warning text-dark fw-bold px-4 rounded-pill shadow-sm" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 animate__animated animate__fadeInLeft">
+                    <span class="badge bg-danger mb-3 px-3 py-2">LIVE SERIES</span>
+                    <h1 class="display-3 fw-bold mb-3">The Ashes 2025</h1>
+                    <p class="fs-4 mb-4 text-white-50">Australia vs England • 3rd Test • Day 4 • The battle for the urn heats up.</p>
+                    <div class="d-flex gap-3">
+                        <button onclick="scrollToSection('live-score-widget')" class="btn btn-warning btn-lg fw-bold rounded-pill px-5 shadow-lg">View Scorecard</button>
+                        <button onclick="scrollToSection('rankings-table')" class="btn btn-outline-light btn-lg fw-bold rounded-pill px-5">Rankings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="ticker-wrap border-bottom border-secondary">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <span class="badge bg-danger me-3 animate-pulse">LIVE NOW</span>
+                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span class="ticker-item"><strong class="text-warning">AUS vs ENG:</strong> ENG 254/4 (Trail by 120)</span>
+                    <span class="ticker-item"><strong class="text-warning">IND vs SA:</strong> IND Won by 4 wkts</span>
+                    <span class="ticker-item"><strong class="text-warning">PAK vs NZ:</strong> Match Delayed (Rain)</span>
+                    <span class="ticker-item"><strong class="text-warning">SL vs WI:</strong> WI 180/2 (18.4 ov)</span>
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h2 class="fw-bold border-start border-5 border-warning ps-3 mb-0">Top Stories</h2>
+                </div>
+
+                <div class="row" id="cricket-scores-container"></div>
+                <div class="card mb-4 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?auto=format&fit=crop&w=800&q=80" class="news-img-lg card-img-top" alt="Cricket Match" onerror="this.src='https://via.placeholder.com/800x400?text=Image+Unavailable'">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-primary me-2">T20 World Cup</span>
+                            <small class="text-muted"><i class="far fa-clock"></i> 2 hours ago</small>
+                        </div>
+                        <h3 class="card-title fw-bold">Squad Announcement: The 15 Men Who Will Bring It Home</h3>
+                        <p class="card-text text-secondary fs-5">The selectors have pulled a surprise by including two uncapped spinners for the mega event.</p>
+                        <button onclick="openNewsModal('Squad Announcement', 'The 15-man squad has been finalized. Notable inclusions are the two uncapped spinners who impressed in the IPL. The captain expressed confidence that this balanced side can adapt to any conditions. Full Squad List: ...')" class="btn btn-outline-dark fw-bold mt-2">Read Full Analysis</button>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=600&q=80" class="news-img-sm card-img-top" alt="Cricket Ball" onerror="this.src='https://via.placeholder.com/600x400'">
+                            <div class="card-body">
+                                <h5 class="fw-bold">Pitch Report: Day 5</h5>
+                                <p class="small text-muted">Cracks are opening up. Spinners expected to dominate.</p>
+                                <button onclick="openNewsModal('Pitch Report', 'The Day 5 pitch is showing significant wear and tear. Experts predict sharp turn and variable bounce, making it a nightmare for batsmen in the final session.')" class="btn btn-link text-warning fw-bold text-decoration-none p-0">Read More <i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://th.bing.com/th/id/OIP.iLmoYGtpzYtrUQLnXrpA8gHaEK?w=321&h=180&c=7&r=0&o=7&cb=ucfimg2&dpr=1.3&pid=1.7&rm=3&ucfimg=1" class="news-img-sm card-img-top" alt="Stadium" onerror="this.src='https://via.placeholder.com/600x400'">
+                            <div class="card-body">
+                                <h5 class="fw-bold">New Stadium Unveiled</h5>
+                                <p class="small text-muted">A look at the state-of-the-art facility.</p>
+                                <button onclick="openNewsModal('New Stadium', 'The new stadium features a retractable roof and a seating capacity of 50,000. It is set to host the final of the upcoming Champions Trophy.')" class="btn btn-link text-warning fw-bold text-decoration-none p-0">Read More <i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                
+                <div class="card live-score-card mb-4" id="live-score-widget">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-danger">LIVE</span>
+                            <small class="text-muted fw-bold">3rd ODI • Mumbai</small>
+                        </div>
+                        <div class="text-center my-3">
+                            <div class="row align-items-center">
+                                <div class="col-4"><h4 class="fw-bold">IND</h4><h5 class="mb-0">285/5</h5></div>
+                                <div class="col-4"><span class="fw-bold text-muted">vs</span></div>
+                                <div class="col-4"><h4 class="fw-bold">AUS</h4><h5 class="mb-0">142/3</h5></div>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning py-1 text-center small fw-bold mb-0">Australia need 144 runs</div>
+                    </div>
+                </div>
+
+                <div class="card mb-4" id="rankings-table">
+                    <div class="card-header bg-dark text-white fw-bold"><i class="fas fa-trophy text-warning me-2"></i>ICC Team Rankings</div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 small">
+                            <thead><tr><th>#</th><th>Team</th><th>Rating</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Australia</td><td class="fw-bold">124</td></tr>
+                                <tr><td>2</td><td>India</td><td class="fw-bold">120</td></tr>
+                                <tr><td>3</td><td>England</td><td class="fw-bold">105</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="fw-bold"><i class="fas fa-poll me-2"></i>Fan Poll</h5>
+                        <p class="small mb-3">Who will win the Orange Cap?</p>
+                        <div id="poll-options">
+                            <div class="form-check mb-2"><input class="form-check-input" type="radio" name="poll" id="poll1"><label class="form-check-label" for="poll1">Shubman Gill</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="radio" name="poll" id="poll2"><label class="form-check-label" for="poll2">Yashasvi Jaiswal</label></div>
+                            <button onclick="submitPoll()" class="btn btn-warning btn-sm fw-bold w-100 text-dark">Vote Now</button>
+                        </div>
+                        <div id="poll-results" class="poll-results mt-3">
+                            <h6 class="text-warning mb-3">Results:</h6>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Gill</span><span>60%</span></div><div class="progress"><div class="progress-bar bg-warning" style="width: 60%"></div></div></div>
+                            <div class="mb-2"><div class="d-flex justify-content-between small"><span>Jaiswal</span><span>40%</span></div><div class="progress"><div class="progress-bar bg-info" style="width: 40%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="bg-dark py-5">
+        <div class="container">
+            <h3 class="text-white fw-bold mb-4 border-start border-4 border-danger ps-3">Match Highlights</h3>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="card bg-black text-white border-0 h-100 video-card" onclick="openVideoModal('Best Catches')">
+                        <img src="https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">Best Catches of the Month</small></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-black text-white border-0 h-100 video-card" onclick="openVideoModal('Kohli 100')">
+                        <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">Kohli's Masterclass: 100(54)</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-4 border-top border-secondary">
+        <p class="mb-0">&copy; 2025 SportsHere. All rights reserved.</p>
+    </footer>
+
+    <div class="modal fade" id="newsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fw-bold" id="newsModalTitle"></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p id="newsModalContent"></p></div></div></div>
+    </div>
+    <div class="modal fade" id="videoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content bg-black"><div class="modal-header border-secondary"><h5 class="modal-title text-white" id="videoModalTitle"></h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body text-center p-5"><i class="fas fa-play-circle fa-5x text-white mb-3"></i><p class="text-white-50">Video Player Simulation</p></div></div></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'center' }); element.classList.add('highlight-pulse'); setTimeout(() => { element.classList.remove('highlight-pulse'); }, 2000); }
+        }
+        function submitPoll() { document.getElementById('poll-options').style.display = 'none'; document.getElementById('poll-results').style.display = 'block'; }
+        function openNewsModal(title, content) { document.getElementById('newsModalTitle').innerText = title; document.getElementById('newsModalContent').innerText = content; new bootstrap.Modal(document.getElementById('newsModal')).show(); }
+        function openVideoModal(title) { document.getElementById('videoModalTitle').innerText = title; new bootstrap.Modal(document.getElementById('videoModal')).show(); }
+    </script>
+</body>
+</html>

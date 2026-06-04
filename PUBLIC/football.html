@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsHere - Football World</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)), url('https://tse1.mm.bing.net/th/id/OIP.DCXnRpq6hX2iQJDiFdSubQHaD5?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3');
+            background-size: cover;
+            background-position: center;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            color: white;
+            margin-top: 56px;
+        }
+
+        /* Card Styles */
+        .card { border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .news-img-lg { height: 350px; object-fit: cover; width: 100%; }
+        .news-img-sm { height: 200px; object-fit: cover; width: 100%; }
+        
+        /* Sidebar Widgets */
+        .live-match-card { border-top: 4px solid #198754; }
+        
+        /* Interactive Elements */
+        .highlight-pulse { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(25, 135, 84, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
+        }
+
+        .video-card { cursor: pointer; }
+        .video-card:hover .fa-play-circle { transform: scale(1.2); transition: 0.3s; color: #ffc107 !important; }
+
+        /* Ticker */
+        .ticker-wrap { background: #212529; color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        .ticker-item { display: inline-block; padding: 0 2rem; border-right: 1px solid #444; }
+
+        /* Stats Bars */
+        .progress { height: 10px; border-radius: 5px; background-color: #e9ecef; }
+        
+        /* Poll Results Hidden initially */
+        .poll-results { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="index.html"><i class="fas fa-running text-warning"></i> SportsHere</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="cricket.html">Cricket</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold text-warning" href="football.html">Football</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="nba.html">NBA</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="contact.html">Contact</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-warning text-dark fw-bold px-4 rounded-pill shadow-sm" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 animate__animated animate__fadeInLeft">
+                    <span class="badge bg-primary mb-3 px-3 py-2">CHAMPIONS LEAGUE</span>
+                    <h1 class="display-3 fw-bold mb-3">The Beautiful Game</h1>
+                    <p class="fs-4 mb-4 text-white-50">Follow every goal, tackle, and transfer. Premier League, La Liga, Serie A, and beyond.</p>
+                    <div class="d-flex gap-3">
+                        <button onclick="scrollToSection('upcoming-fixtures')" class="btn btn-primary btn-lg fw-bold rounded-pill px-5 shadow-lg">Fixtures</button>
+                        <button onclick="scrollToSection('league-table')" class="btn btn-outline-light btn-lg fw-bold rounded-pill px-5">Standings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="ticker-wrap border-bottom border-secondary">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <span class="badge bg-success me-3 animate-pulse">MATCHDAY</span>
+                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span class="ticker-item"><strong class="text-warning">MCI vs LIV:</strong> 2 - 2 (FT)</span>
+                    <span class="ticker-item"><strong class="text-warning">RMA vs BAR:</strong> 1 - 0 (35')</span>
+                    <span class="ticker-item"><strong class="text-warning">BAY vs DOR:</strong> 3 - 1 (FT)</span>
+                    <span class="ticker-item"><strong class="text-warning">PSG vs LYN:</strong> 0 - 0 (KO 8:00 PM)</span>
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            
+            <div class="col-lg-8">
+                
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h2 class="fw-bold border-start border-5 border-primary ps-3 mb-0">Headlines</h2>
+                </div>
+
+                <div class="row" id="football-scores-container"></div>
+                <div class="card mb-4 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1614632537190-23e4146777db?auto=format&fit=crop&w=800&q=80" class="news-img-lg card-img-top" alt="Trophy" onerror="this.src='https://via.placeholder.com/800x400?text=Image+Unavailable'">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-warning text-dark me-2">Breaking</span>
+                            <small class="text-muted"><i class="far fa-clock"></i> 10 mins ago</small>
+                        </div>
+                        <h3 class="card-title fw-bold">Title Race Decided: City Clinch 5th Consecutive Trophy</h3>
+                        <p class="card-text text-secondary fs-5">In a dramatic final day at the Etihad, a last-minute winner secured the title, leaving rivals heartbroken.</p>
+                        <button onclick="openNewsModal('Man City Wins Title', 'In a stunning turn of events, Manchester City has secured their fifth consecutive Premier League title. The match remained goalless until the 93rd minute when a stunning strike sealed the victory. Fans erupted in joy as the final whistle blew, marking another historic night at the Etihad Stadium.')" class="btn btn-outline-dark fw-bold mt-2">Read Match Report</button>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://images.unsplash.com/photo-1518605348399-f2e70e93a382?auto=format&fit=crop&w=600&q=80" class="news-img-sm card-img-top" alt="Training" onerror="this.src='https://via.placeholder.com/600x400'">
+                            <div class="card-body">
+                                <h5 class="fw-bold">Transfer Update: Mbappe</h5>
+                                <p class="small text-muted">Real Madrid reportedly submit final bid of €180m for the French superstar.</p>
+                                <button onclick="openNewsModal('Mbappe Transfer Saga', 'Real Madrid has submitted what they claim is their final offer for Kylian Mbappe. Sources close to the club say the bid is around €180m plus add-ons. PSG is yet to respond, but insiders suggest a deal could be reached before the window closes on Friday.')" class="btn btn-link text-primary fw-bold text-decoration-none p-0">Read More <i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=600&q=80" class="news-img-sm card-img-top" alt="Stadium" onerror="this.src='https://via.placeholder.com/600x400'">
+                            <div class="card-body">
+                                <h5 class="fw-bold">UCL Draw: Quarter Finals</h5>
+                                <p class="small text-muted">A massive clash set between Bayern Munich and Arsenal. Full draw details inside.</p>
+                                <button onclick="openNewsModal('Champions League Draw', 'The Quarter Final draw has concluded in Nyon. Arsenal will face Bayern Munich, while Manchester City takes on Real Madrid in a repeat of last years semi-final. PSG faces Barcelona, and Atletico Madrid will play Dortmund.')" class="btn btn-link text-primary fw-bold text-decoration-none p-0">Read More <i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <h3 class="fw-bold mb-4"><i class="fas fa-chart-line text-primary me-2"></i> Stats Zone</h3>
+                    <div class="card bg-white p-4">
+                        <h5 class="fw-bold mb-3">Golden Boot Race (2025/26)</h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-bold mb-1">
+                                <span>1. Erling Haaland (MCI)</span>
+                                <span>32 Goals</span>
+                            </div>
+                            <div class="progress"><div class="progress-bar bg-info" style="width: 95%"></div></div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-bold mb-1">
+                                <span>2. Harry Kane (BAY)</span>
+                                <span>28 Goals</span>
+                            </div>
+                            <div class="progress"><div class="progress-bar bg-danger" style="width: 85%"></div></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-bold mb-1">
+                                <span>3. Kylian Mbappe (PSG)</span>
+                                <span>25 Goals</span>
+                            </div>
+                            <div class="progress"><div class="progress-bar bg-dark" style="width: 75%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+                
+                <div class="card live-match-card mb-4" id="live-widget">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-danger animate-pulse">LIVE</span>
+                            <small class="text-muted fw-bold">La Liga • Bernabéu</small>
+                        </div>
+                        <div class="text-center my-3">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <h4 class="fw-bold">RMA</h4>
+                                    <h2 class="mb-0 text-primary">1</h2>
+                                </div>
+                                <div class="col-4">
+                                    <span class="fw-bold text-muted small">35:00</span>
+                                    <div class="badge bg-light text-dark mt-1">1st Half</div>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="fw-bold">BAR</h4>
+                                    <h2 class="mb-0 text-primary">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center small text-muted">
+                            <i class="fas fa-futbol me-1"></i> Vinicius Jr (12')
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light text-center">
+                        <button onclick="openNewsModal('Match Center', 'Live stats loading... Possession: RMA 45% - BAR 55%. Shots on Target: RMA 3 - BAR 1.')" class="btn btn-sm btn-link text-decoration-none fw-bold text-dark">Open Match Center</button>
+                    </div>
+                </div>
+
+                <div class="card mb-4" id="league-table">
+                    <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between">
+                        <span>Premier League</span>
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 small">
+                            <thead><tr><th>#</th><th>Club</th><th>P</th><th>Pts</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td class="fw-bold">Man City</td><td>38</td><td>91</td></tr>
+                                <tr><td>2</td><td>Arsenal</td><td>38</td><td>89</td></tr>
+                                <tr><td>3</td><td>Liverpool</td><td>38</td><td>82</td></tr>
+                                <tr><td>4</td><td>Aston Villa</td><td>38</td><td>68</td></tr>
+                                <tr><td>5</td><td>Spurs</td><td>38</td><td>66</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-center bg-white">
+                        <a href="#" class="text-decoration-none small fw-bold">View Full Table</a>
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm" id="upcoming-fixtures">
+                    <div class="card-header bg-primary text-white fw-bold">
+                        <i class="fas fa-calendar-alt me-2"></i>Upcoming Fixtures
+                    </div>
+                    <div class="list-group list-group-flush">
+                         <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold d-block">Man Utd vs Chelsea</span>
+                                <small class="text-muted">Tomorrow, 8:00 PM</small>
+                            </div>
+                            <span class="badge bg-light text-dark border">PL</span>
+                        </div>
+                         <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold d-block">Juventus vs Milan</span>
+                                <small class="text-muted">Sunday, 7:45 PM</small>
+                            </div>
+                            <span class="badge bg-light text-dark border">Serie A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-dark text-white mb-4" id="fan-poll">
+                    <div class="card-body">
+                        <h5 class="fw-bold"><i class="fas fa-poll me-2 text-warning"></i>Fan Poll</h5>
+                        <p class="small mb-3">Who wins the UCL this year?</p>
+                        
+                        <div id="poll-options">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="poll" id="poll1">
+                                <label class="form-check-label" for="poll1">Real Madrid</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="poll" id="poll2">
+                                <label class="form-check-label" for="poll2">Man City</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="poll" id="poll3">
+                                <label class="form-check-label" for="poll3">Bayern Munich</label>
+                            </div>
+                            <button onclick="submitPoll()" class="btn btn-primary btn-sm fw-bold w-100">Vote Now</button>
+                        </div>
+
+                        <div id="poll-results" class="poll-results mt-3">
+                            <h6 class="text-warning mb-3">Thanks for voting!</h6>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between small"><span>Real Madrid</span><span>45%</span></div>
+                                <div class="progress"><div class="progress-bar bg-warning" style="width: 45%"></div></div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between small"><span>Man City</span><span>35%</span></div>
+                                <div class="progress"><div class="progress-bar bg-info" style="width: 35%"></div></div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between small"><span>Bayern</span><span>20%</span></div>
+                                <div class="progress"><div class="progress-bar bg-danger" style="width: 20%"></div></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="bg-black py-5">
+        <div class="container">
+            <h3 class="text-white fw-bold mb-4 border-start border-4 border-primary ps-3">Trending Highlights</h3>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('Goal of the Week: Garnacho')">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="Video 1" onerror="this.src='https://via.placeholder.com/400x250'">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                            <i class="fas fa-play-circle fa-3x text-white"></i>
+                        </div>
+                        <div class="card-body p-2"><small class="fw-bold">Goal of the Week: Garnacho</small></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('UCL Semi-Final Preview')">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="Video 2" onerror="this.src='https://via.placeholder.com/400x250'">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">UCL Semi-Final Preview</small></div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('Post-Match Interview')">
+                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="Video 3" onerror="this.src='https://via.placeholder.com/400x250'">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">Funny Moments: Press Conference</small></div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="card bg-dark text-white border-0 h-100 video-card" onclick="openVideoModal('Top 5 Saves')">
+                        <img src="https://images.unsplash.com/photo-1522778119026-d647f0565c6a?auto=format&fit=crop&w=400&q=80" class="card-img-top opacity-75" alt="Video 4" onerror="this.src='https://via.placeholder.com/400x250'">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"><i class="fas fa-play-circle fa-3x text-white"></i></div>
+                        <div class="card-body p-2"><small class="fw-bold">Top 5 Saves by Alisson</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-4 border-top border-secondary">
+        <p class="mb-0">&copy; 2025 SportsHere. All rights reserved.</p>
+    </footer>
+
+    <div class="modal fade" id="newsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="newsModalTitle">Article Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="newsModalContent">Article content goes here...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-black">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-white" id="videoModalTitle">Video Title</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center p-5">
+                    <i class="fas fa-play-circle fa-5x text-white mb-3"></i>
+                    <p class="text-white-50">Video Player Simulation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 1. Scroll to Section
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.add('highlight-pulse');
+                setTimeout(() => {
+                    element.classList.remove('highlight-pulse');
+                }, 2000);
+            }
+        }
+
+        // 2. Poll Logic
+        function submitPoll() {
+            document.getElementById('poll-options').style.display = 'none';
+            document.getElementById('poll-results').style.display = 'block';
+        }
+
+        // 3. News Modal Logic
+        function openNewsModal(title, content) {
+            document.getElementById('newsModalTitle').innerText = title;
+            document.getElementById('newsModalContent').innerText = content;
+            var myModal = new bootstrap.Modal(document.getElementById('newsModal'));
+            myModal.show();
+        }
+
+        // 4. Video Modal Logic
+        function openVideoModal(title) {
+            document.getElementById('videoModalTitle').innerText = title;
+            var myModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            myModal.show();
+        }
+    </script>
+</body>
+</html>
